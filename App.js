@@ -7,14 +7,19 @@
 
 import React from 'react';
 
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, StatusBar} from 'react-native';
 import Home from './src/screens/Home';
+import Navigation from './src/navigation';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function App() {
   return (
-    <View>
-      <Home />
-    </View>
+    <>
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView style={{flex: 1, backgroundColor: 'black'}}>
+        <Navigation />
+      </SafeAreaView>
+    </>
   );
 }
 

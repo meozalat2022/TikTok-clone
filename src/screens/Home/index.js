@@ -8,7 +8,7 @@ const Home = () => {
       <FlatList
         data={posts}
         showsVerticalScrollIndicator={false}
-        snapToInterval={Dimensions.get('window').height}
+        snapToInterval={Dimensions.get('window').height - 50}
         snapToAlignment={'start'}
         decelerationRate={'fast'}
         renderItem={({item}) => {
