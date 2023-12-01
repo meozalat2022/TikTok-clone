@@ -1,0 +1,21 @@
+type Song @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  imageUri: String!
+  Posts: [Post] @hasMany(indexName: "bySong", fields: ["id"])
+}
+
+type Post @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userID: ID! @index(name: "byUser")
+  videoUrl: String!
+  description: String!
+  songID: ID! @index(name: "bySong")
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String!
+  email: String!
+  Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+} 
