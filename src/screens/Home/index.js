@@ -1,28 +1,20 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, FlatList, Text, View, Dimensions} from 'react-native';
 import React from 'react';
 import Posts from '../../components/Posts';
+import posts from '../../../data/posts';
 const Home = () => {
-  const post1 = {
-    id: 'p1',
-    videoUri:
-      'https://d8vywknz0hvjw.cloudfront.net/fitenium-media-prod/videos/45fee890-a74f-11ea-8725-311975ea9616/proccessed_720.mp4',
-    user: {
-      id: 'u1',
-      username: 'daviddobrik',
-      imageUri:
-        'https://th.bing.com/th/id/R.da2e546841da40cdcf60061743233500?rik=IeO7Sr%2fkUW54wQ&riu=http%3a%2f%2fwww.venmond.com%2fdemo%2fvendroid%2fimg%2favatar%2fbig.jpg&ehk=JihI5nQ0BOd0W%2bZVhtIWmqwac0NMyRMOV7%2bzryywg%2fg%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1',
-    },
-    description: 'hahahah oh boy @borat',
-    songName: 'NF - The search',
-    songImage:
-      'https://th.bing.com/th/id/R.da2e546841da40cdcf60061743233500?rik=IeO7Sr%2fkUW54wQ&riu=http%3a%2f%2fwww.venmond.com%2fdemo%2fvendroid%2fimg%2favatar%2fbig.jpg&ehk=JihI5nQ0BOd0W%2bZVhtIWmqwac0NMyRMOV7%2bzryywg%2fg%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1',
-    likes: 126,
-    comments: 12,
-    shares: 44,
-  };
   return (
     <View>
-      <Posts post={post1} />
+      <FlatList
+        data={posts}
+        showsVerticalScrollIndicator={false}
+        snapToInterval={Dimensions.get('window').height}
+        snapToAlignment={'start'}
+        decelerationRate={'fast'}
+        renderItem={({item}) => {
+          return <Posts post={item} />;
+        }}
+      />
     </View>
   );
 };
