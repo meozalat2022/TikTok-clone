@@ -13,12 +13,16 @@ import Navigation from './src/navigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Amplify} from 'aws-amplify';
 import {generateClient} from 'aws-amplify/api';
+import {
+  withAuthenticator,
+  useAuthenticator,
+} from '@aws-amplify/ui-react-native';
 import config from './src/amplifyconfiguration.json';
 Amplify.configure(config);
 
 const client = generateClient();
 
-function App() {
+function App({signOut, user}) {
   return (
     <>
       <StatusBar barStyle="light-content" />
@@ -31,4 +35,4 @@ function App() {
 
 const styles = StyleSheet.create({});
 
-export default App;
+export default withAuthenticator(App);
