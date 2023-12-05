@@ -11,6 +11,12 @@ import {StyleSheet, View, StatusBar} from 'react-native';
 import Home from './src/screens/Home';
 import Navigation from './src/navigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {Amplify} from 'aws-amplify';
+import {generateClient} from 'aws-amplify/api';
+import config from './src/amplifyconfiguration.json';
+Amplify.configure(config);
+
+const client = generateClient();
 
 function App() {
   return (

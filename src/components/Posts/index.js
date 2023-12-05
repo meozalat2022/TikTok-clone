@@ -70,19 +70,19 @@ const Posts = props => {
             </View>
             <View style={styles.bottomContainer}>
               <View>
-                <Text style={styles.creator}>{post.user.username}</Text>
+                <Text style={styles.creator}>{post.username}</Text>
                 <Text style={styles.description}>{post.description}</Text>
                 <View style={styles.songView}>
                   {/* icon */}
                   <Entypo name={'beamed-note'} size={24} color="white" />
                   {/* name */}
-                  <Text style={styles.songName}>{post.songName}</Text>
+                  <Text style={styles.songName}>{post.song.name}</Text>
                 </View>
               </View>
               <View>
                 <Image
                   style={styles.songImage}
-                  source={{uri: post.songImage}}
+                  source={{uri: post.song.imageUri}}
                 />
               </View>
             </View>

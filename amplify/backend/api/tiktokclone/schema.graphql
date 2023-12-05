@@ -1,21 +1,25 @@
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String
+  email: String!
+  posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  imageUri: String!
+}
+
 type Song @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   imageUri: String!
-  Posts: [Post] @hasMany(indexName: "bySong", fields: ["id"])
+  posts: [Post] @hasMany(indexName: "bySong", fields: ["id"])
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
   id: ID!
-  userID: ID! @index(name: "byUser")
-  videoUrl: String!
   description: String!
+  videoUri: String!
   songID: ID! @index(name: "bySong")
+  song: Song @belongsTo(fields: ["songID"])
+  userID: ID! @index(name: "byUser")
+  user: User @belongsTo(fields: ["userID"])
 }
-
-type User @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  username: String!
-  email: String!
-  Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
-} 
+ 
