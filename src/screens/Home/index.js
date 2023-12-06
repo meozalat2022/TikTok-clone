@@ -18,7 +18,6 @@ const Home = () => {
     };
     fetChPosts();
   }, []);
-  console.log(posts);
 
   return (
     <View>
