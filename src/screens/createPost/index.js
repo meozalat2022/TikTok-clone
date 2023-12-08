@@ -7,28 +7,48 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useRoute} from '@react-navigation/native';
-import {uploadData} from 'aws-amplify/storage';
+import {uploadData, getUrl} from 'aws-amplify/storage';
 import {v4 as uuidv4} from 'uuid';
+import {createPost} from '../../graphql/mutations';
+import {generateClient} from 'aws-amplify/api';
+import {getCurrentUser} from 'aws-amplify/auth';
+
 const CreatePost = ({route}) => {
   const [description, setDescription] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
   const videoPath = route.params.videoUri;
-  console.log(videoPath);
-
+  const client = generateClient();
   const uploadVideo = async imagePath => {
     try {
       const response = await fetch(imagePath);
       const blob = await response.blob();
-      console.log('111111111111111', blob);
       const result = await uploadData({
         key: `${uuidv4()}.mp4`,
         data: blob,
       }).result;
       console.log('Succeeded: ', result);
+      const getUrlResult = await getUrl({
+        key: result.key,
+      });
+      setVideoUrl(getUrlResult.url);
     } catch (error) {
       console.log('Error : ', error);
     }
   };
+  const publish = async () => {
+    const {userId, username} = await getCurrentUser({});
 
+    const newPost = {
+      description,
+      videoUri: videoUrl,
+      songID: 'e24274ee-b142-4ece-b1b7-efee182eb1fb',
+      userID: userId,
+    };
+    await client.graphql({
+      query: createPost,
+      variables: {input: newPost},
+    });
+  };
   useEffect(() => {
     uploadVideo(videoPath);
   }, [videoPath]);
@@ -42,7 +62,11 @@ const CreatePost = ({route}) => {
           placeholder="Description"
         />
       </View>
-      <TouchableOpacity style={styles.publishPost}>
+      <TouchableOpacity
+        onPress={() => {
+          publish();
+        }}
+        style={styles.publishPost}>
         <Text style={styles.publishText}>Publish</Text>
       </TouchableOpacity>
     </View>

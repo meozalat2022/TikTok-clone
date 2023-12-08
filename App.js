@@ -30,7 +30,8 @@ function App({signOut, user}) {
     const fetchUser = async () => {
       try {
         //getcurrent authenticated user
-        const userDetails = await getCurrentUser({});
+        const {userId, username} = await getCurrentUser({});
+
         const {accessToken, idToken} = (await fetchAuthSession()).tokens ?? {};
         console.log(idToken.payload.email);
         const existingUser = await client.graphql({
@@ -60,7 +61,6 @@ function App({signOut, user}) {
     };
     fetchUser();
   }, []);
-
   return (
     <>
       <StatusBar barStyle="light-content" />
